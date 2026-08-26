@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:meditator/models/meditation_exercise_model.dart';
+import 'package:meditator/models/mindfulness_exercise_model.dart';
+import 'package:meditator/models/sleep_exercise_model.dart';
 import 'package:meditator/providers/filter_provider.dart';
 import 'package:meditator/utils/colors.dart';
 import 'package:meditator/utils/text_styles.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const new({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,7 @@ class HomePage extends StatelessWidget {
                     Widget? child,
                   ) {
                     final completedData = filetrdata.filteredData;
+                    completedData.shuffle();
                     return SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -117,11 +121,63 @@ class HomePage extends StatelessWidget {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.kPrimaryBlue,
+                                        color: data is MeditationExercise
+                                            ? AppColors.kPrimaryBlue
+                                            : data is MindfulnessExercise
+                                            ? AppColors.kPrimaryBlue.withValues(
+                                                alpha: 0.7,
+                                              )
+                                            : AppColors.kPrimaryDarkBlue
+                                                  .withValues(alpha: 0.8),
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(8),
-                                        child: Column(),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              style: AppTextStyle.titleStyle
+                                                  .copyWith(
+                                                    color: AppColors
+                                                        .kPrimaryWhiteColor,
+                                                  ),
+                                            ),
+                                            Text(
+                                              data.category,
+                                              style: AppTextStyle.subTitleStyle
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppColors
+                                                        .kPrimaryBlackColor
+                                                        .withValues(alpha: 0.6),
+                                                  ),
+                                            ),
+                                            Text(
+                                              "${data.duration.toString()} minutes",
+                                              style: AppTextStyle.subTitleStyle
+                                                  .copyWith(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColors
+                                                        .kPrimaryDeepDarkBlue
+                                                        .withValues(alpha: 0.5),
+                                                  ),
+                                            ),
+                                            Text(
+                                              data.description,
+                                              style: AppTextStyle.bodyStyle
+                                                  .copyWith(
+                                                    color: AppColors.kCardColor,
+                                                  ),
+                                              maxLines:
+                                                  (data.description.length / 2)
+                                                      .toInt(),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   );

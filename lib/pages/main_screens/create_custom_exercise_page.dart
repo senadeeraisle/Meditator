@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CreateCustomExercisePage extends StatelessWidget {
-  const new({super.key});
+  const CreateCustomExercisePage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,7 @@ class FilterProvider extends ChangeNotifier {
   //get all data from other providers
   Future<void> getData(BuildContext context) async {
     //ensure this runs after build
-    await Future.delayed(Duration.zero);
+    // await Future.delayed(Duration.zero);
 
     //meditation exercises
     final List<MeditationExercise> meditationExercise =

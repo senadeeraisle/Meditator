@@ -28,166 +28,263 @@ class HomePage extends StatelessWidget {
               return Center(child: Text("Error loading data"));
             }
             return Consumer<FilterProvider>(
-              builder:
-                  (
-                    BuildContext context,
-                    FilterProvider filetrdata,
-                    Widget? child,
-                  ) {
-                    final completedData = filetrdata.filteredData;
-                    completedData.shuffle();
-                    return SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              builder: (BuildContext context, FilterProvider filetrdata, Widget? child) {
+                final completedData = filetrdata.filteredData;
+                completedData.shuffle();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Image.asset(
-                                  'assets/images/meditation_app_logo.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.1,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  'Meditator',
-                                  style: TextStyle(
-                                    fontSize: 29,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.kPrimaryBlue,
-                                  ),
-                                ),
-                              ],
+                            Image.asset(
+                              'assets/images/meditation_app_logo.png',
+                              width: MediaQuery.of(context).size.width * 0.1,
                             ),
-                            SizedBox(height: 30),
+                            SizedBox(width: 10),
                             Text(
-                              "Select a category to start exploring!",
-                              style: AppTextStyle.subTitleStyle.copyWith(
-                                color: AppColors.kPrimaryDeepDarkBlue,
+                              'Meditator',
+                              style: TextStyle(
+                                fontSize: 29,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.kPrimaryBlue,
                               ),
                             ),
-                            SizedBox(height: 10),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: AppColors.kPrimaryBlue.withValues(
-                                  alpha: 0.6,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 5,
-                                ),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: [
-                                      FilterChip(
-                                        label: Text("All"),
-                                        onSelected: (value) {},
-                                      ),
-                                      SizedBox(width: 10),
-                                      FilterChip(
-                                        label: Text("Meditaion"),
-                                        onSelected: (value) {},
-                                      ),
-                                      SizedBox(width: 10),
-                                      FilterChip(
-                                        label: Text("Midfulness"),
-                                        onSelected: (value) {},
-                                      ),
-                                      SizedBox(width: 10),
-                                      FilterChip(
-                                        label: Text("Sleep Stories"),
-                                        onSelected: (value) {},
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            if (completedData.isNotEmpty)
-                              StaggeredGrid.count(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                children: completedData.map((data) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: data is MeditationExercise
-                                            ? AppColors.kPrimaryBlue
-                                            : data is MindfulnessExercise
-                                            ? AppColors.kPrimaryBlue.withValues(
-                                                alpha: 0.7,
-                                              )
-                                            : AppColors.kPrimaryDarkBlue
-                                                  .withValues(alpha: 0.8),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              data.name,
-                                              style: AppTextStyle.titleStyle
-                                                  .copyWith(
-                                                    color: AppColors
-                                                        .kPrimaryWhiteColor,
-                                                  ),
-                                            ),
-                                            Text(
-                                              data.category,
-                                              style: AppTextStyle.subTitleStyle
-                                                  .copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors
-                                                        .kPrimaryBlackColor
-                                                        .withValues(alpha: 0.6),
-                                                  ),
-                                            ),
-                                            Text(
-                                              "${data.duration.toString()} minutes",
-                                              style: AppTextStyle.subTitleStyle
-                                                  .copyWith(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors
-                                                        .kPrimaryDeepDarkBlue
-                                                        .withValues(alpha: 0.5),
-                                                  ),
-                                            ),
-                                            Text(
-                                              data.description,
-                                              style: AppTextStyle.bodyStyle
-                                                  .copyWith(
-                                                    color: AppColors.kCardColor,
-                                                  ),
-                                              maxLines:
-                                                  (data.description.length / 2)
-                                                      .toInt(),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
                           ],
                         ),
-                      ),
-                    );
-                  },
+                        SizedBox(height: 30),
+                        Text(
+                          "Select a category to start exploring!",
+                          style: AppTextStyle.subTitleStyle.copyWith(
+                            color: AppColors.kPrimaryDeepDarkBlue,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.kPrimaryBlue.withValues(
+                              alpha: 0.6,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  FilterChip(
+                                    label: Text(
+                                      "All",
+                                      style: TextStyle(
+                                        color:
+                                            filetrdata.getSelectedCategory() ==
+                                                "All"
+                                            ? AppColors.kPrimaryWhiteColor
+                                            : AppColors.kPrimaryBlackColor,
+                                      ),
+                                    ),
+                                    onSelected: (bool value) {
+                                      filetrdata.filterData(category: "All");
+                                    },
+                                    selected:
+                                        filetrdata.getSelectedCategory() ==
+                                        "All",
+                                    selectedColor: AppColors.kPrimaryBlue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadiusGeometry.circular(8),
+                                      side: BorderSide(
+                                        color: AppColors.kPrimaryDarkBlue,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    showCheckmark: false,
+                                  ),
+                                  SizedBox(width: 10),
+                                  FilterChip(
+                                    label: Text(
+                                      "Meditation",
+                                      style: TextStyle(
+                                        color:
+                                            filetrdata.getSelectedCategory() ==
+                                                "Meditation"
+                                            ? AppColors.kPrimaryWhiteColor
+                                            : AppColors.kPrimaryBlackColor,
+                                      ),
+                                    ),
+                                    onSelected: (bool value) {
+                                      filetrdata.filterData(
+                                        category: "Meditation",
+                                      );
+                                    },
+                                    selected:
+                                        filetrdata.getSelectedCategory() ==
+                                        "Meditation",
+                                    selectedColor: AppColors.kPrimaryBlue,
+                                    showCheckmark: false,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadiusGeometry.circular(8),
+                                      side: BorderSide(
+                                        color: AppColors.kPrimaryDarkBlue,
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  FilterChip(
+                                    label: Text(
+                                      "Mindfulness",
+                                      style: TextStyle(
+                                        color:
+                                            filetrdata.getSelectedCategory() ==
+                                                "Mindfulness"
+                                            ? AppColors.kPrimaryWhiteColor
+                                            : AppColors.kPrimaryBlackColor,
+                                      ),
+                                    ),
+                                    onSelected: (bool value) {
+                                      filetrdata.filterData(
+                                        category: "Mindfulness",
+                                      );
+                                    },
+                                    selected:
+                                        filetrdata.getSelectedCategory() ==
+                                        "Mindfulness",
+                                    selectedColor: AppColors.kPrimaryBlue,
+                                    showCheckmark: false,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadiusGeometry.circular(8),
+                                      side: BorderSide(
+                                        color: AppColors.kPrimaryDarkBlue,
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  FilterChip(
+                                    label: Text(
+                                      "Sleep Stories",
+                                      style: TextStyle(
+                                        color:
+                                            filetrdata.getSelectedCategory() ==
+                                                "Sleep_Exercise"
+                                            ? AppColors.kPrimaryWhiteColor
+                                            : AppColors.kPrimaryBlackColor,
+                                      ),
+                                    ),
+                                    onSelected: (bool value) {
+                                      filetrdata.filterData(
+                                        category: "Sleep_Exercise",
+                                      );
+                                    },
+                                    selected:
+                                        filetrdata.getSelectedCategory() ==
+                                        "Sleep_Exercise",
+                                    selectedColor: AppColors.kPrimaryBlue,
+                                    showCheckmark: false,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadiusGeometry.circular(8),
+                                      side: BorderSide(
+                                        color: AppColors.kPrimaryDarkBlue,
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        if (completedData.isNotEmpty)
+                          StaggeredGrid.count(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            children: completedData.map((data) {
+                              return GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: data is MeditationExercise
+                                        ? AppColors.kPrimaryBlue
+                                        : data is MindfulnessExercise
+                                        ? AppColors.kPrimaryBlue.withValues(
+                                            alpha: 0.7,
+                                          )
+                                        : AppColors.kPrimaryDarkBlue.withValues(
+                                            alpha: 0.8,
+                                          ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data.name,
+                                          style: AppTextStyle.titleStyle
+                                              .copyWith(
+                                                color: AppColors
+                                                    .kPrimaryWhiteColor,
+                                              ),
+                                        ),
+                                        Text(
+                                          data.category,
+                                          style: AppTextStyle.subTitleStyle
+                                              .copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors
+                                                    .kPrimaryBlackColor
+                                                    .withValues(alpha: 0.6),
+                                              ),
+                                        ),
+                                        Text(
+                                          "${data.duration.toString()} minutes",
+                                          style: AppTextStyle.subTitleStyle
+                                              .copyWith(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors
+                                                    .kPrimaryDeepDarkBlue
+                                                    .withValues(alpha: 0.5),
+                                              ),
+                                        ),
+                                        Text(
+                                          data.description,
+                                          style: AppTextStyle.bodyStyle
+                                              .copyWith(
+                                                color: AppColors.kCardColor,
+                                              ),
+                                          maxLines:
+                                              (data.description.length / 2)
+                                                  .toInt(),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),

@@ -10,6 +10,7 @@ import 'package:meditator/providers/meditation_provider.dart';
 class FilterProvider extends ChangeNotifier {
   List<dynamic> _allData = [];
   List<dynamic> _filteredData = [];
+  String _selectedCategory = "All";
 
   //get all data from other providers
   Future<void> getData(BuildContext context) async {
@@ -39,4 +40,24 @@ class FilterProvider extends ChangeNotifier {
   }
 
   List<dynamic> get filteredData => _filteredData;
+
+  //method to filter the data
+  void filterData({required String category}) {
+    _selectedCategory = category;
+    if (_selectedCategory == "All") {
+      _filteredData = _allData;
+    } else if (_selectedCategory == "Meditation") {
+      _filteredData = _allData.whereType<MeditationExercise>().toList();
+    } else if (_selectedCategory == "Mindfulness") {
+      _filteredData = _allData.whereType<MindfulnessExercise>().toList();
+    } else if (_selectedCategory == "Sleep_Exercise") {
+      _filteredData = _allData.whereType<SleepExerciseModel>().toList();
+    }
+    notifyListeners();
+  }
+
+  // method to get selected category
+  String getSelectedCategory() {
+    return _selectedCategory;
+  }
 }

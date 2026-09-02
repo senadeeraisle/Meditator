@@ -1,15 +1,150 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:meditator/models/functions_model.dart';
 import 'package:meditator/models/meditation_exercise_model.dart';
 import 'package:meditator/models/mindfulness_exercise_model.dart';
 import 'package:meditator/models/sleep_exercise_model.dart';
 import 'package:meditator/providers/filter_provider.dart';
+import 'package:meditator/router/route_names.dart';
 import 'package:meditator/utils/colors.dart';
 import 'package:meditator/utils/text_styles.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  void handleMindfullExercisePressed(
+    BuildContext context,
+    MindfulnessExercise data,
+  ) {
+    GoRouter.of(context).pushNamed(
+      RouteNames.mindFullExerciseGridview,
+      queryParameters: {'mindfullexercise': jsonEncode(data.toJson())},
+    );
+  }
+
+  void handleMeditationExercisePressed({
+    required BuildContext context,
+    required String name,
+    required String category,
+    required String description,
+    required int duration,
+    required String videoUrl,
+  }) {
+    showModalBottomSheet(
+      backgroundColor: AppColors.kPrimaryWhiteColor,
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: AppTextStyle.titleStyle.copyWith(
+                    fontSize: 24,
+                    color: AppColors.kPrimaryDarkBlue,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  category,
+                  style: AppTextStyle.titleStyle.copyWith(
+                    color: AppColors.kPrimaryGrey,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  description,
+                  style: AppTextStyle.titleStyle.copyWith(
+                    color: AppColors.kPrimaryBlackColor.withValues(alpha: 0.7),
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "${duration.toString()} min",
+                  style: AppTextStyle.titleStyle.copyWith(
+                    color: AppColors.kPrimaryBlue,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        elevation: const WidgetStatePropertyAll<double>(0),
+                        backgroundColor: WidgetStatePropertyAll<Color>(
+                          AppColors.kPrimaryBlue.withValues(alpha: 0.8),
+                        ),
+                      ),
+                      onPressed: () {
+                        GoRouter.of(context).pushNamed(
+                          RouteNames.meditationExercisePage,
+                          extra: FunctionsModel(
+                            name: name,
+                            category: category,
+                            description: description,
+                            duration: duration,
+                            videoUrl: videoUrl,
+                          ),
+                        );
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Start",
+                        style: AppTextStyle.subTitleStyle.copyWith(
+                          color: AppColors.kPrimaryBlackColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      style: const ButtonStyle(
+                        elevation: WidgetStatePropertyAll<double>(0),
+                        backgroundColor: WidgetStatePropertyAll<Color>(
+                          AppColors.kPrimaryGrey,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Close",
+                        style: AppTextStyle.subTitleStyle.copyWith(
+                          color: AppColors.kPrimaryBlackColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void handleSleepExercisePressed(
+    BuildContext context,
+    SleepExerciseModel data,
+  ) {
+    GoRouter.of(context).pushNamed(
+      RouteNames.sleepExerciseTimer,
+      queryParameters: {'sleep_exercise_timer': jsonEncode(data.tojson())},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +157,10 @@ class HomePage extends StatelessWidget {
           ).getData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
-              return Center(child: Text("Error loading data"));
+              return const Center(child: Text("Error loading data"));
             }
             return Consumer<FilterProvider>(
               builder: (BuildContext context, FilterProvider filetrdata, Widget? child) {
@@ -44,8 +179,8 @@ class HomePage extends StatelessWidget {
                               'assets/images/meditation_app_logo.png',
                               width: MediaQuery.of(context).size.width * 0.1,
                             ),
-                            SizedBox(width: 10),
-                            Text(
+                            const SizedBox(width: 10),
+                            const Text(
                               'Meditator',
                               style: TextStyle(
                                 fontSize: 29,
@@ -55,14 +190,14 @@ class HomePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         Text(
                           "Select a category to start exploring!",
                           style: AppTextStyle.subTitleStyle.copyWith(
                             color: AppColors.kPrimaryDeepDarkBlue,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Container(
                           decoration: BoxDecoration(
                             color: AppColors.kPrimaryBlue.withValues(
@@ -100,14 +235,14 @@ class HomePage extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadiusGeometry.circular(8),
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                         color: AppColors.kPrimaryDarkBlue,
                                         width: 2,
                                       ),
                                     ),
                                     showCheckmark: false,
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   FilterChip(
                                     label: Text(
                                       "Meditation",
@@ -132,13 +267,13 @@ class HomePage extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadiusGeometry.circular(8),
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                         color: AppColors.kPrimaryDarkBlue,
                                         width: 2,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   FilterChip(
                                     label: Text(
                                       "Mindfulness",
@@ -163,13 +298,13 @@ class HomePage extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadiusGeometry.circular(8),
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                         color: AppColors.kPrimaryDarkBlue,
                                         width: 2,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   FilterChip(
                                     label: Text(
                                       "Sleep Stories",
@@ -194,7 +329,7 @@ class HomePage extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadiusGeometry.circular(8),
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                         color: AppColors.kPrimaryDarkBlue,
                                         width: 2,
                                       ),
@@ -205,7 +340,7 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         if (completedData.isNotEmpty)
                           StaggeredGrid.count(
                             crossAxisCount: 2,
@@ -213,7 +348,25 @@ class HomePage extends StatelessWidget {
                             mainAxisSpacing: 10,
                             children: completedData.map((data) {
                               return GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  if (data is MindfulnessExercise) {
+                                    handleMindfullExercisePressed(
+                                      context,
+                                      data,
+                                    );
+                                  } else if (data is MeditationExercise) {
+                                    handleMeditationExercisePressed(
+                                      context: context,
+                                      name: data.name,
+                                      category: data.category,
+                                      description: data.description,
+                                      duration: data.duration,
+                                      videoUrl: data.videoUrl,
+                                    );
+                                  } else {
+                                    handleSleepExercisePressed(context, data);
+                                  }
+                                },
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -228,7 +381,7 @@ class HomePage extends StatelessWidget {
                                           ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,

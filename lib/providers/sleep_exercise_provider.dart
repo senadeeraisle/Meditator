@@ -73,7 +73,7 @@ class SleepExerciseProvider extends ChangeNotifier {
         category: "Sleep Stories",
         name: "Snowy Cabin",
         description: "This sleep story takes you to a cozy cabin in a snowy landscape. As you listen, you will be guided to visualize the serene beauty of the snow-covered surroundings and the warmth of the cabin. The calming narration and gentle background music create a peaceful atmosphere, helping you relax and fall asleep.",
-        duration: 20,
+        duration: 120,
         audioUrl: "https://example.com/audio/snowy-cabin.mp3",
       ),
     ];

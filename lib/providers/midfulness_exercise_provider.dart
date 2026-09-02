@@ -151,4 +151,24 @@ class MidfulnessExerciseProvider extends ChangeNotifier {
     ];
     midfulnessExercises = List.from(_allMidfulnessExercises);
   }
+
+  // get mindfulness exercises
+  List<MindfulnessExercise> getMidfulnessExercise() {
+    return midfulnessExercises;
+  }
+
+  // method to search mindfull exercise by the title
+  void searchmindfullExercise(String query) {
+    if (query.isEmpty) {
+      midfulnessExercises = List.from(_allMidfulnessExercises);
+    } else {
+      midfulnessExercises = _allMidfulnessExercises
+          .where(
+            (element) =>
+                element.name.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
+    }
+    notifyListeners();
+  }
 }

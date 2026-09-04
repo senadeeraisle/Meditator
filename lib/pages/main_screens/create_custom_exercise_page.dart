@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meditator/utils/colors.dart';
 import 'package:meditator/utils/text_styles.dart';
+import 'package:meditator/widgets/meditation_form.dart';
+import 'package:meditator/widgets/mindfulness_form.dart';
+import 'package:meditator/widgets/sleep_exercise_form.dart';
 
 class CreateCustomExercisePage extends StatefulWidget {
   const CreateCustomExercisePage({super.key});
@@ -31,6 +34,7 @@ class _CreateCustomExercisePageState extends State<CreateCustomExercisePage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
                 SizedBox(
@@ -50,7 +54,7 @@ class _CreateCustomExercisePageState extends State<CreateCustomExercisePage> {
                         child: DropdownButton<String>(
                           value: typeOfContent,
                           icon: const Icon(
-                            Icons.arrow_downward,
+                            Icons.arrow_drop_down,
                             color: AppColors.kPrimaryBlue,
                           ),
                           isExpanded: true,
@@ -75,6 +79,13 @@ class _CreateCustomExercisePageState extends State<CreateCustomExercisePage> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
+                if (typeOfContent == "Meditation")
+                  const MeditationForm()
+                else if (typeOfContent == "Mindfulness")
+                  const MindfulnessForm()
+                else if (typeOfContent == "Sleep Exercise")
+                  const SleepExerciseForm(),
               ],
             ),
           ),

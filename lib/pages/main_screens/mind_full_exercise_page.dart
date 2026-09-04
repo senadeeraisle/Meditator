@@ -18,7 +18,7 @@ class MindFullExercisePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "Mindfull Exercise",
-          style: const TextStyle(
+          style: TextStyle(
             color: AppColors.kPrimaryBlue,
             fontSize: 29,
             fontWeight: FontWeight.bold,

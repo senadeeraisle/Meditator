@@ -1,10 +1,27 @@
+import 'package:hive/hive.dart';
+part 'mindfulness_exercise_model.g.dart';
+
+@HiveType(typeId: 1)
 class MindfulnessExercise {
+  @HiveField(0)
   final String category;
+
+  @HiveField(1)
   final String name;
+
+  @HiveField(2)
   final String description;
+
+  @HiveField(3)
   final List<String> instructions;
+
+  @HiveField(4)
   final int duration;
+
+  @HiveField(5)
   final String instructionsUrl;
+
+  @HiveField(6)
   final String imagePath;
 
   MindfulnessExercise({

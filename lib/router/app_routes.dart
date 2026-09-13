@@ -5,6 +5,7 @@ import 'package:meditator/models/functions_model.dart';
 import 'package:meditator/models/mindfulness_exercise_model.dart';
 import 'package:meditator/models/sleep_exercise_model.dart';
 import 'package:meditator/pages/main_screen.dart';
+import 'package:meditator/pages/main_screens/create_custom_exercise_page.dart';
 import 'package:meditator/pages/single_meditation_exercise_page.dart';
 import 'package:meditator/pages/single_midfull_exercise_gridview.dart';
 import 'package:meditator/pages/single_mindfull_exercise_page.dart';
@@ -69,6 +70,12 @@ class AppRoutes {
           );
           return SleepExerciseTimer(sleepExercise: sleepExercise);
         },
+      ),
+
+      GoRoute(
+        path: RouteNames.crateCustomExercisePage,
+        name: RouteNames.crateCustomExercisePage,
+        builder: (context, state) => const CreateCustomExercisePage(),
       ),
     ],
   );

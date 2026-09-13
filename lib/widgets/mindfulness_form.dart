@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:meditator/models/mindfulness_exercise_model.dart';
+import 'package:meditator/providers/custom_data_provider.dart';
 import 'package:meditator/utils/colors.dart';
 import 'package:meditator/utils/text_styles.dart';
 import 'package:meditator/widgets/reusable/text_form_fields.dart';
+import 'package:provider/provider.dart';
 
 class MindfulnessForm extends StatefulWidget {
   const new({super.key});
@@ -51,6 +54,7 @@ class _MindfulnessFormState extends State<MindfulnessForm> {
           ),
           const SizedBox(height: 15),
           Form(
+            key: _fromKey,
             child: Column(
               children: [
                 if (_imagePath != null) Image.file(_imagePath!, height: 150),
@@ -174,7 +178,28 @@ class _MindfulnessFormState extends State<MindfulnessForm> {
                         ),
                       ),
                       //todo: Save data
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_fromKey.currentState!.validate()) {
+                          _fromKey.currentState!.save();
+
+                          final imagePathString = _imagePath?.path ?? '';
+
+                          final mindfulnessExercise = MindfulnessExercise(
+                            category: _category,
+                            name: _name,
+                            description: _description,
+                            instructions: _instruction,
+                            duration: _duration,
+                            instructionsUrl: _instructionUrl,
+                            imagePath: imagePathString,
+                          );
+
+                          Provider.of<CustomDataProvider>(
+                            context,
+                            listen: false,
+                          ).addmidFulnessExercise(mindfulnessExercise, context);
+                        }
+                      },
                       child: const Text(
                         "Submit",
                         style: TextStyle(

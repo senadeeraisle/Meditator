@@ -4,4 +4,5 @@ class RouteNames {
   static const String meditationExercisePage = "/meditationexercisepage";
   static const String mindFullExerciseGridview = "/mindfullexercisegridview";
   static const String sleepExerciseTimer = "/sleepexercisetimer";
+  static const String crateCustomExercisePage = "/cratecustomexercisepage";
 }

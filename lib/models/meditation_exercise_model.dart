@@ -32,7 +32,7 @@ class MeditationExercise {
 
   factory MeditationExercise.fromJson(Map<String, dynamic> json) {
     return MeditationExercise(
-      category: json['categoty'],
+      category: json['category'],
       name: json['name'],
       description: json['description'],
       duration: json['duration'],
